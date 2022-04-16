@@ -1,6 +1,6 @@
 import express from 'express';
 
-import apiRoutes from './routes/api.routes';
+import apiRoutes from './routes/api.routes.js';
 
 const SERVER_PORT = process.env.PORT || 3000;
 

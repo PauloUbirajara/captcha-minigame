@@ -5,4 +5,4 @@ class APIController {
 	};
 }
 
-export const apiController = new APIController();
+export default new APIController();
