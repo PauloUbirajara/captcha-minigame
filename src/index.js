@@ -15,4 +15,7 @@ const app = express();
 
 app.use(apiRoutes);
 
+// TODO - Criar token a partir da finalização de um minigame
+// TODO - Passar token do client pra API e retornar algo visual pro client
+
 app.listen(SERVER_PORT, onServerOpen);
