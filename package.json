@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"start": "node src/index.js"
 	},
 	"repository": {
 		"type": "git",
@@ -16,5 +16,8 @@
 	"bugs": {
 		"url": "https://github.com/PauloUbirajara/captcha-minigame/issues"
 	},
-	"homepage": "https://github.com/PauloUbirajara/captcha-minigame#readme"
+	"homepage": "https://github.com/PauloUbirajara/captcha-minigame#readme",
+	"dependencies": {
+		"express": "^4.17.3"
+	}
 }
