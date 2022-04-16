@@ -1,2 +1,2 @@
 # captcha-minigame
-Sistema para melhorar a experiência de autenticação do usuário 
+Sistema para melhorar a experiência de verificação do usuário 
