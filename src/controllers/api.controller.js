@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 class APIController {
-	get = (req, res) => {
-		console.log(req);
+	get = (_req, res) => {
 		return res.json({ success: true });
 	};
 
@@ -15,22 +14,26 @@ class APIController {
 			});
 		}
 
-		if (!process.env.SECRET_KEY) {
+		const { SECRET_KEY } = process.env;
+
+		if (!SECRET_KEY) {
 			return res
 				.status(401)
 				.json({ error: "Variável de ambiente 'SECRET_KEY' não definida" });
 		}
 
-		const URL = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${token}`;
+		const URL = `https://www.google.com/recaptcha/api/siteverify?secret=${SECRET_KEY}&response=${token}`;
 
 		const result = await axios
 			.post(URL)
-			.then((data) => {
-				return res.status(200).json({ data });
+			.then((apiResult) => {
+				const { data, status } = apiResult;
+				return res.status(status).json(data);
 			})
 			.catch((err) => {
+				const errorMessage = `Erro durante verificação com a API do ReCaptchaV3: ${err}`;
 				return res.status(401).json({
-					error: `Houve um erro durante a verificação com a API do ReCaptchaV3: ${err}`
+					error: errorMessage
 				});
 			});
 
