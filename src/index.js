@@ -13,6 +13,7 @@ const onServerOpen = () => {
 
 const app = express();
 
+app.use(express.json())
 app.use(apiRoutes);
 
 // TODO - Criar token a partir da finalização de um minigame
