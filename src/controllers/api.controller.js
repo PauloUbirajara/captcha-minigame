@@ -7,20 +7,7 @@ class APIController {
 
 	verify = async (req, res) => {
 		const { token } = req.body;
-
-		if (!token) {
-			return res.status(400).json({
-				error: "Atributo 'token' não fornecido no corpo da requisição"
-			});
-		}
-
 		const { SECRET_KEY } = process.env;
-
-		if (!SECRET_KEY) {
-			return res
-				.status(401)
-				.json({ error: "Variável de ambiente 'SECRET_KEY' não definida" });
-		}
 
 		const URL = `https://www.google.com/recaptcha/api/siteverify?secret=${SECRET_KEY}&response=${token}`;
 
