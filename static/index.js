@@ -1,12 +1,16 @@
 const PUBLIC_KEY = '6LeUFkAfAAAAAJyqI6lH0hIH1SSb-SQ1BS0iDgLB';
-const captchaCheckbutton = document.getElementById('open-modal');
+const captchaCheckbutton = document.getElementById('captcha-checkbutton');
 
 function onClick() {
+	if (captchaCheckbutton.getAttribute('state') == 'success') {
+		return;
+	}
+
 	captchaCheckbutton.setAttribute('disabled', 'disabled');
 	captchaCheckbutton.removeAttribute('state');
 
 	grecaptcha.ready(() => {
-		grecaptcha.execute(PUBLIC_KEY, { action: 'submit' }).then((token) => {
+		grecaptcha.execute(PUBLIC_KEY, { action: 'login' }).then((token) => {
 			const options = {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -21,7 +25,8 @@ function onClick() {
 					throw new Error('Erro ao enviar token');
 				})
 				.then((data) => {
-					const { success, 'error-codes': errorCodes } = data;
+					console.log(data);
+					const { success } = data;
 					if (success) {
 						captchaCheckbutton.setAttribute('state', 'success');
 						return;
@@ -32,7 +37,10 @@ function onClick() {
 					)}`;
 					throw new Error(invalidTokenError);
 				})
-				.catch(failCaptcha);
+				.catch(failCaptcha)
+				.finally(() => {
+					captchaCheckbutton.removeAttribute('disabled');
+				});
 		});
 	});
 }
@@ -40,5 +48,4 @@ function onClick() {
 function failCaptcha(reason) {
 	console.warn(reason);
 	captchaCheckbutton.setAttribute('state', 'fail');
-	captchaCheckbutton.removeAttribute('disabled');
 }

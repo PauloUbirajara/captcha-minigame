@@ -15,7 +15,8 @@ class APIController {
 			.post(URL)
 			.then((apiResult) => {
 				const { data, status } = apiResult;
-				return res.status(status).json(data);
+				const { success, score, action, 'error-codes': errorCodes } = data;
+				return res.status(status).json({ success, score, action, errorCodes });
 			})
 			.catch((err) => {
 				const errorMessage = `Erro durante verificação com a API do ReCaptchaV3: ${err}`;
