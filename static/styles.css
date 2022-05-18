@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline: none;
+	box-sizing: border-box;
+
+	font-family: 'Poppins', sans-serif;
+}
+
+.main {
+	position: relative;
+}
+
+#captcha {
+	display: flex;
+	gap: 20px;
+	padding: 25px;
+	border-radius: 5px;
+	border: 1px solid #afafaf;
+	margin: 20px;
+	align-items: center;
+	color: #333;
+}
+
+#captcha-checkbutton {
+	padding: 20px;
+	border: 3px solid #6e6e6e;
+	border-radius: 10px;
+	transition: 250ms background-color, 250ms border-color;
+}
+
+#captcha-checkbutton:disabled {
+	animation: wait 800ms infinite alternate ease-in-out;
+}
+
+@keyframes wait {
+	0% {transform: translateY(2px);}
+	100% {transform: translateY(-2px);}
+}
+
+#captcha-checkbutton[state='success'] {
+	border-color: #1f9729;
+	background: #9cfca4;
+	pointer-events: none;
+}
+
+#captcha-checkbutton[state='fail'] {
+	border-color: #971f1f;
+	background: #fc9c9c;
+}

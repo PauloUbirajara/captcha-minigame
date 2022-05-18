@@ -1,4 +1,6 @@
 const FRAMERATE = 30;
+const MAX_HORIZONTAL_SPEED = 5;
+
 let canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 let ballRadius = 10;
@@ -11,8 +13,8 @@ let paddleWidth = 75;
 let paddleX = (canvas.width - paddleWidth) / 2;
 let rightPressed = false;
 let leftPressed = false;
-let brickRowCount = 5;
-let brickColumnCount = 3;
+let brickRowCount = 1;
+let brickColumnCount = 2;
 let brickWidth = 75;
 let brickHeight = 20;
 let brickPadding = 10;
@@ -57,7 +59,7 @@ function collisionDetection() {
 	for (let c = 0; c < brickColumnCount; c++) {
 		for (let r = 0; r < brickRowCount; r++) {
 			let b = bricks[c][r];
-			if (b.status == 1) {
+			if (b.status) {
 				if (
 					x > b.x &&
 					x < b.x + brickWidth &&
@@ -67,8 +69,8 @@ function collisionDetection() {
 					dy = -dy;
 					b.status = 0;
 					score++;
-					if (score == brickRowCount * brickColumnCount) {
-						alert('YOU WIN, CONGRATS!');
+					if (score === brickRowCount * brickColumnCount) {
+						win();
 					}
 				}
 			}
@@ -93,7 +95,7 @@ function drawPaddle() {
 function drawBricks() {
 	for (let c = 0; c < brickColumnCount; c++) {
 		for (let r = 0; r < brickRowCount; r++) {
-			if (bricks[c][r].status == 1) {
+			if (bricks[c][r].status) {
 				let brickX = r * (brickWidth + brickPadding) + brickOffsetLeft;
 				let brickY = c * (brickHeight + brickPadding) + brickOffsetTop;
 				bricks[c][r].x = brickX;
@@ -135,11 +137,14 @@ function draw() {
 	} else if (y + dy > canvas.height - ballRadius) {
 		if (x > paddleX && x < paddleX + paddleWidth) {
 			dy = -dy;
+			dx =
+				Math.random() *
+				MAX_HORIZONTAL_SPEED *
+				(Math.round(Math.random) === 0 ? 1 : -1);
 		} else {
 			lives--;
 			if (!lives) {
-				alert('GAME OVER');
-				document.location.reload();
+				lose();
 			} else {
 				x = canvas.width / 2;
 				y = canvas.height - 30;
@@ -160,5 +165,16 @@ function draw() {
 	y += dy;
 }
 
-const interval = setInterval(draw, FRAMERATE / 1000);
-// TODO Limpar interval após vencer/perder jogo
+function win() {
+	alert('YOU WIN, CONGRATS!');
+	clearInterval(interval);
+	onClick();
+}
+
+function lose() {
+	alert('GAME OVER');
+	clearInterval(interval);
+	failCaptcha('Não passou no minigame');
+}
+
+const interval = setInterval(draw, 1000 / FRAMERATE);
