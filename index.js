@@ -1,16 +1,19 @@
-import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import { join } from 'path';
 
-import apiRoutes from './routes/api.routes.js';
+import routes from './src/routes/api.routes.js';
 
 dotenv.config();
 
 const app = express();
+const currentFolder = join(process.cwd(), '../public/')
 
+app.use('/static', express.static(currentFolder));
 app.use(cors());
 app.use(express.json());
-app.use(apiRoutes);
+app.use(routes);
 
 // TODO - Criar token a partir da finalização de um minigame
 // TODO - Passar token do client pra API e retornar algo visual pro client
