@@ -11,7 +11,7 @@ class APIController {
 
 		const URL = `https://www.google.com/recaptcha/api/siteverify?secret=${SECRET_KEY}&response=${token}`;
 
-		const result = await axios
+		return axios
 			.post(URL)
 			.then((apiResult) => {
 				const { data, status } = apiResult;
@@ -24,8 +24,6 @@ class APIController {
 					error: errorMessage
 				});
 			});
-
-		return result;
 	};
 }
 
