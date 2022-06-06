@@ -42,6 +42,7 @@ function keyDownHandler(e) {
 		leftPressed = true;
 	}
 }
+
 function keyUpHandler(e) {
 	if (e.code == 'ArrowRight') {
 		rightPressed = false;
@@ -49,33 +50,41 @@ function keyUpHandler(e) {
 		leftPressed = false;
 	}
 }
+
 function mouseMoveHandler(e) {
 	let relativeX = e.clientX - canvas.offsetLeft;
 	if (relativeX > 0 && relativeX < canvas.width) {
 		paddleX = relativeX - paddleWidth / 2;
 	}
 }
+
 function collisionDetection() {
-	for (let c = 0; c < brickColumnCount; c++) {
-		for (let r = 0; r < brickRowCount; r++) {
-			let b = bricks[c][r];
-			if (b.status) {
-				if (
-					x > b.x &&
-					x < b.x + brickWidth &&
-					y > b.y &&
-					y < b.y + brickHeight
-				) {
-					dy = -dy;
-					b.status = 0;
-					score++;
-					if (score === brickRowCount * brickColumnCount) {
-						win();
-					}
-				}
-			}
+	const brickArea = brickColumnCount * brickRowCount;
+	for (let blockIndex = 0; blockIndex < brickArea; blockIndex++) {
+		const c = Math.floor(blockIndex / brickRowCount);
+		const r = blockIndex % brickColumnCount;
+
+		let brick = bricks[c][r];
+
+		if (!brick.status) {
+			continue;
+		}
+
+		if (!blockWithinLimits(x, y)) {
+			continue;
+		}
+
+		dy = -dy;
+		brick.status = 0;
+		score++;
+		if (score === brickArea) {
+			win();
 		}
 	}
+}
+
+function blockWithinLimits(x, y) {
+	return x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight;
 }
 
 function drawBall() {

@@ -4,7 +4,7 @@ import APIController from '../controllers/api.controller.js';
 import {
 	checkForSecretKey,
 	checkForToken
-} from '../middlewares/recaptcha.middleware';
+} from '../middlewares/recaptcha.middleware.js';
 
 const apiRoutes = Router();
 
