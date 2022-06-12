@@ -33,12 +33,17 @@
 }
 
 #captcha-checkbutton:disabled {
-	animation: wait 800ms infinite alternate ease-in-out;
+	animation: wait 1000ms infinite alternate ease-in-out;
 }
 
 @keyframes wait {
-	0% {transform: translateY(2px);}
-	100% {transform: translateY(-2px);}
+	0% {
+		transform: translateY(2px);
+	}
+
+	100% {
+		transform: translateY(-2px);
+	}
 }
 
 #captcha-checkbutton[state='success'] {

@@ -8,9 +8,10 @@ import routes from './src/routes/api.routes.js';
 dotenv.config();
 
 const app = express();
-const currentFolder = join(process.cwd(), '../public/')
+// const clientFolder = join(process.cwd(), '../public/')
+const clientFolder = 'public'
 
-app.use('/static', express.static(currentFolder));
+app.use(express.static(clientFolder));
 app.use(cors());
 app.use(express.json());
 app.use(routes);
