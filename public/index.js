@@ -7,12 +7,13 @@ function onClick(event) {
   modal.style.display = "block";
   games[Math.floor(Math.random() * games.length)]();
   canvas.focus();
-  // if (captchaCheckbutton.getAttribute("state") == "success") {
-  //   return;
-  // }
 
-  // captchaCheckbutton.setAttribute("disabled", "disabled");
-  // captchaCheckbutton.removeAttribute("state");
+  if (captchaCheckbutton.getAttribute("state") == "success") {
+    return;
+  }
+
+  captchaCheckbutton.setAttribute("disabled", "disabled");
+  captchaCheckbutton.removeAttribute("state");
 }
 
 function failCaptcha(reason) {
