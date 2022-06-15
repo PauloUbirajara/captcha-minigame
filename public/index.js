@@ -6,8 +6,7 @@ function onClick(event) {
 	captchaCheckbutton.setAttribute('disabled', 'disabled');
 
 	modal.style.display = 'block';
-	// const games = [snakeGame, jigsawGame, shooterGame];
-	const games = [snakeGame];
+	const games = [snakeGame, jigsawGame, shooterGame];
 	const selectedGame = games[Math.floor(Math.random() * games.length)];
 	selectedGame();
 	canvas.focus();
