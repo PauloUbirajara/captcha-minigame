@@ -1,8 +1,10 @@
 const VERIFICATION_ENDPOINT = 'http://localhost:3300/verify';
+const PUBLIC_KEY = '6LeUFkAfAAAAAJyqI6lH0hIH1SSb-SQ1BS0iDgLB';
 
 const captchaCheckbutton = document.getElementById('captcha-checkbutton');
 
-function onClick() {
+function onClick(event) {
+	event.preventDefault();
 	if (captchaCheckbutton.getAttribute('state') == 'success') {
 		return;
 	}
@@ -10,36 +12,41 @@ function onClick() {
 	captchaCheckbutton.setAttribute('disabled', 'disabled');
 	captchaCheckbutton.removeAttribute('state');
 
-	const options = {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: {} // Enviar jogada
-	};
+	grecaptcha.ready(() => {
+		grecaptcha.execute(PUBLIC_KEY, { action: 'login' }).then((token) => {
+			const options = {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ token })
+			};
 
-	fetch(VERIFICATION_ENDPOINT, options)
-		.then((res) => {
-			if (res.ok) {
-				return res.json();
-			}
-			throw new Error('Erro ao enviar token');
-		})
-		.then((data) => {
-			console.log(data);
-			const { success } = data;
-			if (success) {
-				captchaCheckbutton.setAttribute('state', 'success');
-				return;
-			}
+			fetch('http://localhost:3300/verify', options)
+				.then((res) => {
+					console.log(res.status);
+					if (res.ok) {
+						return res.json();
+					}
+					throw new Error('Erro ao enviar token');
+				})
+				.then((data) => {
+					console.log(data);
+					const { success } = data;
+					if (success) {
+						captchaCheckbutton.setAttribute('state', 'success');
+						return;
+					}
 
-			const invalidTokenError = `Token não aprovado pelo backend: ${errorCodes.join(
-				', '
-			)}`;
-			throw new Error(invalidTokenError);
-		})
-		.catch(failCaptcha)
-		.finally(() => {
-			captchaCheckbutton.removeAttribute('disabled');
+					const invalidTokenError = `Token não aprovado pelo backend: ${errorCodes.join(
+						', '
+					)}`;
+					throw new Error(invalidTokenError);
+				})
+				.catch(failCaptcha)
+				.finally(() => {
+					captchaCheckbutton.removeAttribute('disabled');
+				});
 		});
+	});
 }
 
 function failCaptcha(reason) {

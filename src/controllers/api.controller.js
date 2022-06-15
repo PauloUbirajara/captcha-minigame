@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const { PRIVATE_KEY } = process.env;
+
 class APIController {
 	get = (_req, res) => {
 		return res.json({ success: true });
@@ -7,15 +9,14 @@ class APIController {
 
 	verify = async (req, res) => {
 		const { token } = req.body;
-		const { SECRET_KEY } = process.env;
-
-		const URL = `https://www.google.com/recaptcha/api/siteverify?secret=${SECRET_KEY}&response=${token}`;
+		const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${PRIVATE_KEY}&response=${token}`;
 
 		return axios
-			.post(URL)
+			.post(verificationURL)
 			.then((apiResult) => {
 				const { data, status } = apiResult;
 				const { success, score, action, 'error-codes': errorCodes } = data;
+				console.log(data, status);
 				return res.status(status).json({ success, score, action, errorCodes });
 			})
 			.catch((err) => {

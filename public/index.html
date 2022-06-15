@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Captcha Minigame</title>
+	<script src="https://www.google.com/recaptcha/api.js?render=6LeUFkAfAAAAAJyqI6lH0hIH1SSb-SQ1BS0iDgLB&trustedtypes=true"></script>
 	<script defer src="index.js"></script>
 	<link rel="stylesheet" href="styles.css">
 </head>
@@ -14,7 +15,7 @@
 	<div class="main">
 		<div id="captcha">
 			<h3>Verifique se você é mesmo humano</h3>
-			<button id="captcha-checkbutton" onclick="onClick()"></button>
+			<button id="captcha-checkbutton" onclick="onClick(event)"></button>
 		</div>
 	</div>
 </body>
