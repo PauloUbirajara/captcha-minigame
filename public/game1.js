@@ -13,7 +13,8 @@ var ctx = canvas.getContext('2d'),
 		x: 0,
 		y: 0
 	},
-	score = 0;
+	score = 0,
+	loop = undefined;
 
 // pushes possible x and y positions to seperate arrays
 for (i = 0; i <= canvas.width - cellSize; i += cellSize) {
@@ -192,11 +193,13 @@ function reset() {
 		y: 0
 	};
 	score = 0;
+	loop = undefined;
 
 	for (i = 0; i <= canvas.width - cellSize; i += cellSize) {
 		foodX.push(i);
 		foodY.push(i);
 	}
+	// clearInterval(loop);
 }
 function snakeGame() {
 	reset();
