@@ -34,7 +34,7 @@
 
 #captcha-checkbutton:disabled {
   cursor: wait;
-  background: #535353;
+  background: #535353 !important;
 }
 
 #captcha-checkbutton[state="success"] {
