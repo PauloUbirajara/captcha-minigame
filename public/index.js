@@ -29,8 +29,7 @@ function onClick(event) {
 					throw new Error('Erro ao enviar token');
 				})
 				.then((data) => {
-					console.log(data);
-					const { success } = data;
+					const { success, errorCodes } = data;
 					if (success) {
 						captchaCheckbutton.setAttribute('state', 'success');
 						return;

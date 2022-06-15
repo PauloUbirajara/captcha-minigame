@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const { PRIVATE_KEY } = process.env;
-
 class APIController {
 	get = (_req, res) => {
 		return res.json({ success: true });
@@ -9,6 +7,8 @@ class APIController {
 
 	verify = async (req, res) => {
 		const { token } = req.body;
+		const { PRIVATE_KEY } = process.env;
+
 		const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${PRIVATE_KEY}&response=${token}`;
 
 		return axios
