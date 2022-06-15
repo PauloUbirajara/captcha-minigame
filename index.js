@@ -1,19 +1,18 @@
-import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
 
-import apiRoutes from './routes/api.routes.js';
+import routes from './src/routes/api.routes.js';
 
 dotenv.config();
 
 const app = express();
+const clientFolder = 'public';
 
+app.use('/static', express.static(clientFolder));
 app.use(cors());
 app.use(express.json());
-app.use(apiRoutes);
-
-// TODO - Criar token a partir da finalização de um minigame
-// TODO - Passar token do client pra API e retornar algo visual pro client
+app.use(routes);
 
 const SERVER_PORT = process.env.PORT || 3000;
 

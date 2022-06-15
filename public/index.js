@@ -1,7 +1,10 @@
+const VERIFICATION_ENDPOINT = 'http://localhost:3300/verify';
 const PUBLIC_KEY = '6LeUFkAfAAAAAJyqI6lH0hIH1SSb-SQ1BS0iDgLB';
+
 const captchaCheckbutton = document.getElementById('captcha-checkbutton');
 
-function onClick() {
+function onClick(event) {
+	event.preventDefault();
 	if (captchaCheckbutton.getAttribute('state') == 'success') {
 		return;
 	}
@@ -14,11 +17,12 @@ function onClick() {
 			const options = {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ token: token })
+				body: JSON.stringify({ token })
 			};
 
 			fetch('http://localhost:3300/verify', options)
 				.then((res) => {
+					console.log(res.status);
 					if (res.ok) {
 						return res.json();
 					}
