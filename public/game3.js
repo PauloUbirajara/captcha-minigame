@@ -133,7 +133,8 @@ canvas.addEventListener('keyup', function (event) {
 
 // Clear the canvas
 function erase() {
-	context.fillStyle = '#FFFFFF';
+	// context.fillStyle = '#FFFFFF';
+	context.fillStyle = '#FFFFFF70';
 	context.fillRect(0, 0, canvas.width, canvas.height);
 }
 

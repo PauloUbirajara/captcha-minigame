@@ -10,7 +10,7 @@ let pieceHeight;
 let currentPiece;
 let currentDropPiece;
 let mouse;
-img.src = 'http://placeimg.com/640/480/city';
+img.src = 'http://placeimg.com/640/480';
 
 function initPuzzle() {
 	pieces = [];
